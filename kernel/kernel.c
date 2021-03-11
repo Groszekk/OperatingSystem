@@ -5,5 +5,6 @@
 void kmain(void)
 {
     idt_install();
-    print("Hello World");
+    int a = 3 / 0; // test ISR - division by zero
+    print("Hello World\n");
 }

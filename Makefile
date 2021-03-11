@@ -1,6 +1,6 @@
 # todo: do clean makefile structure
 
-OBJECTS = screen.o interrupt_handler.o isr.o interrupt.o
+OBJECTS = screen.o interrupt_handler.o isr.o aisr.o
 
 all:
 	nasm -f elf32 boot.asm -o boot.o
@@ -13,7 +13,7 @@ run:
 
 	gcc -fno-pie -m32 kernel/ISR/isr.c -c -o isr.o -nostdlib -ffreestanding -std=c99 -mno-red-zone -fno-exceptions -nostdlib -Wall -Wextra
 
-	nasm -f elf32 kernel/ISR/interrupt.asm -o interrupt.o
+	nasm -f elf32 kernel/ISR/isr.asm -o aisr.o
 
 	gcc -fno-pie -m32 kernel/kernel.c boot.o ${OBJECTS} -o kernel.bin -nostdlib -ffreestanding -std=c99 -mno-red-zone -fno-exceptions -nostdlib -Wall -Wextra -T link.ld
 	qemu-system-i386 -fda kernel.bin

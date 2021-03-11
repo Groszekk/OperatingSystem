@@ -1,7 +1,6 @@
 section .boot
 [bits 16]
 global boot
-global idt_load
 
 boot:
     mov ax, 0x2401
@@ -73,11 +72,6 @@ boot2:
     call kmain
     cli
     hlt
-
-idt_load:
-    extern idtp
-    lidt [idtp]
-    ret 
 
 ; init stack
 section .bss
