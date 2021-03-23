@@ -1,7 +1,6 @@
 section .boot
 [bits 16]
 global boot
-global idt_load
 
 boot:
     mov ax, 0x2401
@@ -13,14 +12,14 @@ boot:
     mov [disk], dl
 
     mov ah, 0x2          ; read sectors
-    mov al, 6            ; sectors to read
+    mov al, 31            ; sectors to read
     mov ch, 0            ; cylinder idx
     mov cl, 2            ; sector idx
     mov dl, [disk]       ; idx
     mov bx, boot2        ; target pointer
     int 0x13
 
-    cli
+    ; cli
 
     lgdt [GDT_DESCRIPTOR]
     mov eax, cr0
@@ -71,13 +70,7 @@ boot2:
     mov esp, kernel_stack_top
     extern kmain
     call kmain
-    cli
-    hlt
-
-idt_load:
-    extern idtp
-    lidt [idtp]
-    ret 
+    jmp $
 
 ; init stack
 section .bss
