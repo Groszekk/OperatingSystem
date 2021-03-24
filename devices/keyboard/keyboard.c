@@ -5,6 +5,7 @@
 #include "../screen/screen.h"
 #include "../../libc/string.h"
 #include "../../libc/bool.h"
+#include "../../shell/shell.h"
 
 typedef unsigned char bool;
 
@@ -15,7 +16,6 @@ static void keys_controller(unsigned char scancode);
 static void keyboard_callback(void)
 {
     unsigned char scancode = inb(0x60); // get scan code from 0x60 port
-
     keys_controller(scancode);
 }
 
@@ -28,11 +28,23 @@ void keys_controller(unsigned char scancode)
 {
     switch(scancode)
     {
-        case 0x0E: kprint_backspace();
+        case 0x0E:
+        {
+            if(key_buff[0])
+            {
+                backspace(key_buff);
+                kprint_backspace();
+            }
             break;
+        }
 
-        case 0x1C: kprint("\n");
+        case 0x1C:
+        {
+            kprint("\n");
+            input(key_buff);
+            key_buff[0] = '\0';
             break;
+        }
         
         case 0x3A: caps = !caps;
             break;
