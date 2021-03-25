@@ -12,8 +12,6 @@ static void __heap_init(heap_t* heap, int size)
     heap->first = 0, heap->last = 0; // NULL
 }
 
-// heap_chunk_t* chunk;
-
 void heap_init(void)
 {
     __heap_init(&kernel_heap, 1024 * 2);

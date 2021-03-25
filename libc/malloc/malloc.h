@@ -6,11 +6,9 @@
 
 typedef struct heap_chunk
 {
-    unsigned char free;
     struct heap_elem* next;
     struct heap_elem* prev;
     unsigned int data_size;
-    // void* pointer;
 } heap_chunk_t;
 
 typedef struct heap
@@ -18,7 +16,7 @@ typedef struct heap
     unsigned int base_addr;
     unsigned int size;
     unsigned int free_mem_addr;
-    heap_chunk_t* first;    // pierwszy chunk
+    heap_chunk_t* first;
     heap_chunk_t* last;     
 } heap_t;
 
