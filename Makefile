@@ -1,6 +1,6 @@
 # todo: do clean makefile structure
 
-OBJECTS = screen.o interrupt_handler.o isr.o aisr.o ports.o mem.o string.o timer.o keyboard.o irq.o aisq.o shell.o
+OBJECTS = screen.o interrupt_handler.o isr.o aisr.o ports.o mem.o string.o timer.o keyboard.o irq.o aisq.o shell.o malloc.o
 
 all:
 	nasm -f elf32 boot.asm -o boot.o
@@ -23,6 +23,8 @@ run:
 	gcc -fno-pie -m32 devices/keyboard/keyboard.c -c -o keyboard.o -nostdlib -ffreestanding -std=c99 -mno-red-zone -fno-exceptions -nostdlib -Wall -Wextra
 
 	gcc -fno-pie -m32 shell/shell.c -c -o shell.o -nostdlib -ffreestanding -std=c99 -mno-red-zone -fno-exceptions -nostdlib -Wall -Wextra
+
+	gcc -fno-pie -m32 libc/malloc/malloc.c -c -o malloc.o -nostdlib -ffreestanding -std=c99 -mno-red-zone -fno-exceptions -nostdlib -Wall -Wextra
 
 	nasm -f elf32 kernel/ISR/isr.asm -o aisr.o
 	nasm -f elf32 kernel/IRQ/irq.asm -o aisq.o
